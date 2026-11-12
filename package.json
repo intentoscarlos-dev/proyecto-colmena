@@ -1,11 +1,12 @@
 {
   "name": "proyecto-colmena",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
-  "description": "Prototipo simulado del motor de colaboración de Proyecto Colmena",
+  "description": "Prototipo local de coordinación multi-IA para Proyecto Colmena",
   "scripts": {
     "demo": "node src/demo.js",
+    "start": "node src/server.js",
     "test": "node --test"
   },
   "engines": {
