@@ -1,0 +1,29 @@
+name: Validar núcleo de Colmena
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Pruebas y demostración
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Ejecutar pruebas
+        run: npm test
+
+      - name: Ejecutar demostración simulada
+        run: npm run demo
