@@ -16,6 +16,7 @@ async function withStore(run) {
 
 function event(overrides = {}) {
   return {
+    schemaVersion: 1,
     eventId: "EVT-001",
     taskId: "TASK-001",
     type: "task.created",
