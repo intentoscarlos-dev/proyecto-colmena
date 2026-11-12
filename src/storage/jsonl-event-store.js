@@ -10,7 +10,7 @@ const EVENT_TYPES = new Set([
   "task.failed"
 ]);
 
-function validateEvent(event) {
+function validateEvent(event) {\n  if (event?.schemaVersion !== 1) {\n    throw new TypeError("schemaVersion debe ser 1.");\n  }
   if (!event || typeof event !== "object" || Array.isArray(event)) {
     throw new TypeError("El evento debe ser un objeto.");
   }
