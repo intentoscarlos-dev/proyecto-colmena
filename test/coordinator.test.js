@@ -79,10 +79,13 @@ test("devuelve null cuando no hay tareas pendientes", async () => {
 });
 
 test("registra el fallo de una tarea sin detener la cola", async () => {
-  const failingAdapter = {
-    id: "broken",
+  let calls = 0;
+  const recoveringAdapter = {
+    id: "recovering",
     async generate() {
-      throw new Error("Fallo de prueba");
+      calls += 1;
+      if (calls === 1) throw new Error("Fallo de prueba");
+      return { content: "Respuesta simulada tras recuperación." };
     }
   };
 
@@ -98,5 +101,5 @@ test("registra el fallo de una tarea sin detener la cola", async () => {
 
     const second = await coordinator.runNext();
     assert.equal(second.status, "completed");
-  }, [failingAdapter]);
+  }, [recoveringAdapter]);
 });
