@@ -11,15 +11,15 @@ const EVENT_TYPES = new Set([
 ]);
 
 function validateEvent(event) {
-  if (event?.schemaVersion !== 1) {
-    throw new TypeError("schemaVersion debe ser 1.");
-  }
   if (!event || typeof event !== "object" || Array.isArray(event)) {
     throw new TypeError("El evento debe ser un objeto.");
   }
+  if (event.schemaVersion !== 1) {
+    throw new TypeError("schemaVersion debe ser 1.");
+  }
   for (const field of ["eventId", "taskId", "type", "occurredAt"]) {
     if (typeof event[field] !== "string" || event[field].trim() === "") {
-      throw new TypeError(`El campo ${field} es obligatorio.`);
+      throw new TypeError(\`El campo \${field} es obligatorio.\`);
     }
   }
   if (!EVENT_TYPES.has(event.type)) {
@@ -28,7 +28,7 @@ function validateEvent(event) {
   if (Number.isNaN(Date.parse(event.occurredAt))) {
     throw new TypeError("occurredAt debe ser una fecha ISO válida.");
   }
-  if (event.payload === undefined || typeof event.payload !== "object" || event.payload === null) {
+  if (event.payload === undefined || typeof event.payload !== "object" || event.payload === null || Array.isArray(event.payload)) {
     throw new TypeError("payload debe ser un objeto.");
   }
   try {
@@ -58,12 +58,11 @@ export function createJsonlEventStore(filePath) {
     }
     if (raw.trim() === "") return [];
 
-    return raw.split("
-").filter(Boolean).map((line, index) => {
+    return raw.split("\n").filter(Boolean).map((line, index) => {
       try {
         return JSON.parse(line);
       } catch {
-        throw new Error(`Registro JSONL inválido en la línea ${index + 1}.`);
+        throw new Error(\`Registro JSONL inválido en la línea \${index + 1}.\`);
       }
     });
   }
@@ -73,11 +72,10 @@ export function createJsonlEventStore(filePath) {
       validateEvent(event);
       const existing = await readAll();
       if (existing.some((item) => item.eventId === event.eventId)) {
-        throw new Error(`eventId duplicado: ${event.eventId}`);
+        throw new Error(\`eventId duplicado: \${event.eventId}\`);
       }
       await mkdir(dirname(filePath), { recursive: true });
-      await appendFile(filePath, `${JSON.stringify(event)}
-`, { encoding: "utf8", flag: "a" });
+      await appendFile(filePath, \`\${JSON.stringify(event)}\n\`, { encoding: "utf8", flag: "a" });
       return event;
     },
 
