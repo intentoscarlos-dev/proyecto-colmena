@@ -4,22 +4,25 @@ Proyecto colaborativo multi-IA: investigación, escritura, coordinación y desar
 
 ## Estado
 
-Colmena cuenta con un motor de colaboración y un coordinador local simulado. **Todavía no hay conexión automática con GPT, Claude, Gemini o DeepSeek ni despliegue en Cloudflare.**
+Colmena cuenta con un motor de colaboración, un coordinador local, una API HTTP y recuperación de tareas desde un registro de eventos JSONL. **Los agentes siguen siendo simulados: todavía no hay conexión con GPT, Claude, Gemini o DeepSeek ni despliegue en Cloudflare.**
 
-## Núcleo local
+## Ejecutar localmente
 
 Requisitos: Node.js 20 o posterior.
 
 ```bash
 npm test
 npm run demo
+npm start
 ```
 
-El coordinador permite encolar tareas, ejecutarlas en orden y registrar aportes, críticas, síntesis y estados en un almacén JSONL. Los adaptadores continúan siendo ficticios: no necesita claves API, servicios externos ni paquetes adicionales.
+El servicio escucha por defecto en `127.0.0.1:8787`. Expone `GET /health`, `POST /tasks`, `GET /tasks` y `GET /tasks/:id`. La memoria operativa se guarda en `./data/events.jsonl`; las tareas sin evento terminal se recuperan al reiniciar.
+
+Para escuchar fuera de localhost, configura `COLMENA_API_TOKEN` y `COLMENA_HOST`. No publiques el servicio sin autenticación, controles adicionales y revisión de seguridad.
 
 - [Arquitectura inicial](docs/arquitectura-inicial.md)
-- [Prototipo simulado](docs/prototipo-simulado.md)
 - [Coordinador local](docs/coordinador-local.md)
+- [API HTTP y persistencia](docs/api-http-persistencia.md)
 
 ## Principios
 
@@ -31,8 +34,7 @@ El coordinador permite encolar tareas, ejecutarlas en orden y registrar aportes,
 
 ## Próximas etapas
 
-1. Validar el coordinador local y sus límites.
-2. Diseñar recuperación de tareas y estado persistente.
-3. Añadir una interfaz HTTP segura y desplegable.
-4. Preparar colas y almacenamiento duradero.
-5. Incorporar proveedores reales de forma gradual y con autorización.
+1. Revisar y validar esta API local.
+2. Sustituir el almacenamiento local por almacenamiento duradero alojado y cola gestionada.
+3. Preparar un despliegue protegido.
+4. Incorporar proveedores reales de forma gradual, con límites de coste y autorización.
