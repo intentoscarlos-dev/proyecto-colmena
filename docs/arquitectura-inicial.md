@@ -1,7 +1,7 @@
 # Arquitectura inicial — Proyecto Colmena
 
-**Estado:** propuesta inicial, no desplegada  
-**Versión:** 0.1  
+**Estado:** arquitectura en evolución; prototipo local v0.3, no desplegado  
+**Versión:** 0.3  
 **Última revisión:** 2026-11-12
 
 ## Propósito
@@ -43,11 +43,11 @@ se mantiene separada del estado operativo.
 
 | Componente | Responsabilidad | Estado |
 |---|---|---|
-| Coordinador | Recibir tareas, validar límites y organizar ciclos | Pendiente |
-| Motor de colaboración | Investigación independiente, crítica y síntesis | Pendiente |
-| Adaptadores | Traducir el contrato común a cada API | Pendiente |
-| Estado operativo | Guardar tareas, estados, intentos y resultados | Pendiente |
-| Cola asíncrona | Ejecutar trabajos sin bloquear el coordinador | Pendiente |
+| Coordinador | Recibir tareas, validar límites y organizar ciclos | Implementado localmente; cola en memoria y worker de proceso |
+| Motor de colaboración | Investigación independiente, crítica y síntesis | Implementado y probado con adaptadores simulados |
+| Adaptadores | Traducir el contrato común a cada API | Simulados; proveedores reales pendientes |
+| Estado operativo | Guardar tareas, estados, intentos y resultados | Registro JSONL local con reconstrucción de tareas |
+| Cola asíncrona | Ejecutar trabajos sin bloquear el coordinador | Worker local automático; cola duradera gestionada pendiente |
 | Dropbox | Documentación, decisiones y memoria colectiva | En uso como espacio documental |
 | GitHub | Código, revisiones e historial técnico | Repositorio creado |
 
