@@ -4,9 +4,9 @@ Proyecto colaborativo multi-IA: investigación, escritura, coordinación y desar
 
 ## Estado
 
-Colmena está en una etapa inicial. La arquitectura está documentada y existe un prototipo simulado del motor de colaboración. **Todavía no hay conexión automática con GPT, Claude, Gemini o DeepSeek ni despliegue en Cloudflare.**
+Colmena cuenta con un motor de colaboración y un coordinador local simulado. **Todavía no hay conexión automática con GPT, Claude, Gemini o DeepSeek ni despliegue en Cloudflare.**
 
-## Núcleo simulado
+## Núcleo local
 
 Requisitos: Node.js 20 o posterior.
 
@@ -15,10 +15,11 @@ npm test
 npm run demo
 ```
 
-El prototipo prueba aportes independientes, crítica cruzada y síntesis separadas usando adaptadores ficticios. No necesita claves API, servicios externos ni paquetes adicionales.
+El coordinador permite encolar tareas, ejecutarlas en orden y registrar aportes, críticas, síntesis y estados en un almacén JSONL. Los adaptadores continúan siendo ficticios: no necesita claves API, servicios externos ni paquetes adicionales.
 
 - [Arquitectura inicial](docs/arquitectura-inicial.md)
 - [Prototipo simulado](docs/prototipo-simulado.md)
+- [Coordinador local](docs/coordinador-local.md)
 
 ## Principios
 
@@ -30,7 +31,8 @@ El prototipo prueba aportes independientes, crítica cruzada y síntesis separad
 
 ## Próximas etapas
 
-1. Ejecutar y validar el prototipo.
-2. Mejorar contratos, validaciones y persistencia.
-3. Preparar el despliegue del coordinador.
-4. Incorporar proveedores de forma gradual y con autorización.
+1. Validar el coordinador local y sus límites.
+2. Diseñar recuperación de tareas y estado persistente.
+3. Añadir una interfaz HTTP segura y desplegable.
+4. Preparar colas y almacenamiento duradero.
+5. Incorporar proveedores reales de forma gradual y con autorización.
