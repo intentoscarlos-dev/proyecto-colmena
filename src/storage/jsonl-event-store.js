@@ -19,7 +19,7 @@ function validateEvent(event) {
   }
   for (const field of ["eventId", "taskId", "type", "occurredAt"]) {
     if (typeof event[field] !== "string" || event[field].trim() === "") {
-      throw new TypeError(\`El campo \${field} es obligatorio.\`);
+      throw new TypeError(`El campo ${field} es obligatorio.`);
     }
   }
   if (!EVENT_TYPES.has(event.type)) {
@@ -62,7 +62,7 @@ export function createJsonlEventStore(filePath) {
       try {
         return JSON.parse(line);
       } catch {
-        throw new Error(\`Registro JSONL inválido en la línea \${index + 1}.\`);
+        throw new Error(`Registro JSONL inválido en la línea ${index + 1}.`);
       }
     });
   }
@@ -72,10 +72,10 @@ export function createJsonlEventStore(filePath) {
       validateEvent(event);
       const existing = await readAll();
       if (existing.some((item) => item.eventId === event.eventId)) {
-        throw new Error(\`eventId duplicado: \${event.eventId}\`);
+        throw new Error(`eventId duplicado: ${event.eventId}`);
       }
       await mkdir(dirname(filePath), { recursive: true });
-      await appendFile(filePath, \`\${JSON.stringify(event)}\n\`, { encoding: "utf8", flag: "a" });
+      await appendFile(filePath, `${JSON.stringify(event)}\n`, { encoding: "utf8", flag: "a" });
       return event;
     },
 
