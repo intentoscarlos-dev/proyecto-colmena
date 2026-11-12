@@ -10,7 +10,10 @@ const EVENT_TYPES = new Set([
   "task.failed"
 ]);
 
-function validateEvent(event) {\n  if (event?.schemaVersion !== 1) {\n    throw new TypeError("schemaVersion debe ser 1.");\n  }
+function validateEvent(event) {
+  if (event?.schemaVersion !== 1) {
+    throw new TypeError("schemaVersion debe ser 1.");
+  }
   if (!event || typeof event !== "object" || Array.isArray(event)) {
     throw new TypeError("El evento debe ser un objeto.");
   }
@@ -55,7 +58,8 @@ export function createJsonlEventStore(filePath) {
     }
     if (raw.trim() === "") return [];
 
-    return raw.split("\n").filter(Boolean).map((line, index) => {
+    return raw.split("
+").filter(Boolean).map((line, index) => {
       try {
         return JSON.parse(line);
       } catch {
@@ -72,7 +76,8 @@ export function createJsonlEventStore(filePath) {
         throw new Error(`eventId duplicado: ${event.eventId}`);
       }
       await mkdir(dirname(filePath), { recursive: true });
-      await appendFile(filePath, `${JSON.stringify(event)}\n`, { encoding: "utf8", flag: "a" });
+      await appendFile(filePath, `${JSON.stringify(event)}
+`, { encoding: "utf8", flag: "a" });
       return event;
     },
 
